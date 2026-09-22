@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="ms_inherit_report_invoice_document" name="MS Inherit Invoices Report" inherit_id="account.report_invoice_document">
+        <template id="ms_inherit_report_invoice_document" name="MS Inherit Invoices Report" inherit_id="account.report_invoice_document" priority="99">
             <xpath expr="//div[hasclass('page')]/h2" position="replace">
             <h2>
-                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Tax Invoice</span>
-                <span t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Tax Invoice</span>
-                <span t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Tax Invoice</span>
-                <span t-elif="o.move_type == 'out_refund' and o.state == 'posted'">Tax Credit Note</span>
-                <span t-elif="o.move_type == 'out_refund' and o.state == 'draft'">Draft Tax Credit Note</span>
-                <span t-elif="o.move_type == 'out_refund' and o.state == 'cancel'">Cancelled Tax Credit Note</span>
-                <span t-elif="o.move_type == 'in_refund'">Tax Vendor Credit Note</span>
-                <span t-elif="o.move_type == 'in_invoice'">Tax Vendor Bill</span>
+                <t t-set="is_dubai" t-value="o.company_id.country_id.code == 'AE'"/>
+                <t t-if="is_dubai">
+                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                    <span t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                    <span t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'posted'">Credit Note</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'draft'">Draft Credit Note</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'cancel'">Cancelled Credit Note</span>
+                    <span t-elif="o.move_type == 'in_refund'">Vendor Credit Note</span>
+                    <span t-elif="o.move_type == 'in_invoice'">Vendor Bill</span>
+                </t>
+                <t t-else="">
+                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Tax Invoice</span>
+                    <span t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Tax Invoice</span>
+                    <span t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Tax Invoice</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'posted'">Tax Credit Note</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'draft'">Draft Tax Credit Note</span>
+                    <span t-elif="o.move_type == 'out_refund' and o.state == 'cancel'">Cancelled Tax Credit Note</span>
+                    <span t-elif="o.move_type == 'in_refund'">Tax Vendor Credit Note</span>
+                    <span t-elif="o.move_type == 'in_invoice'">Tax Vendor Bill</span>
+                </t>
                 <span t-if="o.name != '/'" t-field="o.name"/>
             </h2>
         </xpath>
